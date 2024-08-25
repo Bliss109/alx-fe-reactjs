@@ -2,38 +2,26 @@ import create from 'zustand';
 
 const useRecipeStore = create(set => ({
   recipes: [],
-  searchTerm: '',
-  filteredRecipes: [],
-  setSearchTerm: (term) => {
-    set(state => {
-      const filtered = state.recipes.filter(recipe =>
-        recipe.title.toLowerCase().includes(term.toLowerCase())
-      );
-      return { searchTerm: term, filteredRecipes: filtered };
-    });
-  },
-  addRecipe: (newRecipe) => set(state => {
-    const updatedRecipes = [...state.recipes, newRecipe];
-    const filtered = updatedRecipes.filter(recipe =>
-      recipe.title.toLowerCase().includes(state.searchTerm.toLowerCase())
+  favorites: [],
+  
+  // Action to add a recipe to favorites
+  addFavorite: (recipeId) => set(state => ({ 
+    favorites: [...state.favorites, recipeId] 
+  })),
+  
+  // Action to remove a recipe from favorites
+  removeFavorite: (recipeId) => set(state => ({
+    favorites: state.favorites.filter(id => id !== recipeId)
+  })),
+  
+  // Action to generate recommendations
+  recommendations: [],
+  generateRecommendations: () => set(state => {
+    // Example recommendation logic: Recommend a recipe if it's not already a favorite
+    const recommended = state.recipes.filter(recipe =>
+      !state.favorites.includes(recipe.id) && Math.random() > 0.5
     );
-    return { recipes: updatedRecipes, filteredRecipes: filtered };
-  }),
-  deleteRecipe: (id) => set(state => {
-    const updatedRecipes = state.recipes.filter(recipe => recipe.id !== id);
-    const filtered = updatedRecipes.filter(recipe =>
-      recipe.title.toLowerCase().includes(state.searchTerm.toLowerCase())
-    );
-    return { recipes: updatedRecipes, filteredRecipes: filtered };
-  }),
-  updateRecipe: (updatedRecipe) => set(state => {
-    const updatedRecipes = state.recipes.map(recipe =>
-      recipe.id === updatedRecipe.id ? updatedRecipe : recipe
-    );
-    const filtered = updatedRecipes.filter(recipe =>
-      recipe.title.toLowerCase().includes(state.searchTerm.toLowerCase())
-    );
-    return { recipes: updatedRecipes, filteredRecipes: filtered };
+    return { recommendations: recommended };
   }),
 }));
 
