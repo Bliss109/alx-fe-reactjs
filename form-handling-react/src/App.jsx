@@ -2,6 +2,8 @@ import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
+import RegistrationForm from './components/RegistrationForm';
+import FormikForm from './components/FormikForm';
 
 function App() {
   const [count, setCount] = useState(0)
@@ -28,6 +30,14 @@ function App() {
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
       </p>
+	  <div>
+      <h1>User Registration Forms</h1>
+      <h2>Controlled Components Form</h2>
+      <RegistrationForm />
+
+      <h2>Formik Managed Form</h2>
+      <FormikForm />
+    </div>
     </>
   )
 }
