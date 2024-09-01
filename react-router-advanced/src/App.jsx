@@ -7,7 +7,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
 import About from './pages/About';
 import NotFound from './pages/NotFound';
-import Profile from './pages/Profile';
+import Profile from './components/Profile';
 import ProfileDetails from './pages/ProfileDetails';
 import ProfileSettings from './pages/ProfileSettings';
 import BlogPost from './pages/BlogPost';
