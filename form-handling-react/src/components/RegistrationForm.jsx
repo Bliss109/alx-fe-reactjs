@@ -1,149 +1,90 @@
-// src/components/RegistrationForm.jsx
 import React, { useState } from 'react';
 
-const RegistrationForm = () => {
-  // State to manage form data
-  const [formData, setFormData] = useState({
-    username: '',
-    email: '',
-    password: '',
-  });
+function RegistrationForm() {
+  // State variables for each form field
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
-  // State to manage errors
+  // State for storing errors
   const [errors, setErrors] = useState({});
 
-  // Handle input changes
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-
-    // Clear the error for the current field as the user types
-    setErrors({
-      ...errors,
-      [name]: '',
-    });
-  };
-
-  // Validate form data
+  // Validate form inputs
   const validate = () => {
     const newErrors = {};
 
-    if (!formData.username.trim()) {
+    if (!username) {
       newErrors.username = 'Username is required';
     }
 
-    if (!formData.email.trim()) {
+    if (!email) {
       newErrors.email = 'Email is required';
-    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = 'Email is invalid';
+    } else if (!/\S+@\S+\.\S+/.test(email)) {
+      newErrors.email = 'Email address is invalid';
     }
 
-    if (!formData.password.trim()) {
+    if (!password) {
       newErrors.password = 'Password is required';
-    } else if (formData.password.length < 6) {
+    } else if (password.length < 6) {
       newErrors.password = 'Password must be at least 6 characters';
     }
 
-    setErrors(newErrors);
-
-    // Return true if no errors
-    return Object.keys(newErrors).length === 0;
+    return newErrors;
   };
 
   // Handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (validate()) {
-      // Mock API call
-      console.log('Form Data Submitted:', formData);
+    const validationErrors = validate();
+    setErrors(validationErrors);
 
-      // Reset form
-      setFormData({
-        username: '',
-        email: '',
-        password: '',
-      });
-
-      setErrors({});
+    // If there are no errors, proceed with form submission
+    if (Object.keys(validationErrors).length === 0) {
+      console.log({ username, email, password });
+      // Reset form fields after successful submission (optional)
+      setUsername('');
+      setEmail('');
+      setPassword('');
     }
   };
 
   return (
-    <form onSubmit={handleSubmit} noValidate>
-      <div style={styles.formGroup}>
-        <label htmlFor="username">Username:</label>
+    <form onSubmit={handleSubmit}>
+      <div>
+        <label>Username:</label>
         <input
           type="text"
-          id="username"
-          name="username"
-          value={formData.username}
-          onChange={handleChange}
-          style={styles.input}
+          value={username}  // Controlled component value binding
+          onChange={(e) => setUsername(e.target.value)}
         />
-        {errors.username && <p style={styles.error}>{errors.username}</p>}
+        {errors.username && <p style={{ color: 'red' }}>{errors.username}</p>}
       </div>
 
-      <div style={styles.formGroup}>
-        <label htmlFor="email">Email:</label>
+      <div>
+        <label>Email:</label>
         <input
           type="email"
-          id="email"
-          name="email"
-          value={formData.email}
-          onChange={handleChange}
-          style={styles.input}
+          value={email}  // Controlled component value binding
+          onChange={(e) => setEmail(e.target.value)}
         />
-        {errors.email && <p style={styles.error}>{errors.email}</p>}
+        {errors.email && <p style={{ color: 'red' }}>{errors.email}</p>}
       </div>
 
-      <div style={styles.formGroup}>
-        <label htmlFor="password">Password:</label>
+      <div>
+        <label>Password:</label>
         <input
           type="password"
-          id="password"
-          name="password"
-          value={formData.password}
-          onChange={handleChange}
-          style={styles.input}
+          value={password}  // Controlled component value binding
+          onChange={(e) => setPassword(e.target.value)}
         />
-        {errors.password && <p style={styles.error}>{errors.password}</p>}
+        {errors.password && <p style={{ color: 'red' }}>{errors.password}</p>}
       </div>
 
-      <button type="submit" style={styles.button}>
-        Register
-      </button>
+      <button type="submit">Register</button>
     </form>
   );
-};
-
-// Optional: Simple inline styles for better presentation
-const styles = {
-  formGroup: {
-    marginBottom: '15px',
-  },
-  input: {
-    width: '100%',
-    padding: '8px',
-    marginTop: '5px',
-    boxSizing: 'border-box',
-  },
-  error: {
-    color: 'red',
-    marginTop: '5px',
-  },
-  button: {
-    padding: '10px 15px',
-    backgroundColor: '#28a745',
-    color: '#fff',
-    border: 'none',
-    cursor: 'pointer',
-  },
-};
+}
 
 export default RegistrationForm;
 
