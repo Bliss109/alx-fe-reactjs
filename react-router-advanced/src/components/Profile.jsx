@@ -12,6 +12,7 @@ function Profile() {
           <li><Link to="settings">Profile Settings</Link></li>
         </ul>
       </nav>
+      {/* Outlet will render the nested routes */}
       <Outlet />
     </div>
   );
