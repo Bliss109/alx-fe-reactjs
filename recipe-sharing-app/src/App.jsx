@@ -7,6 +7,8 @@ import RecipeList from './components/RecipeList';
 import AddRecipeForm from './components/AddRecipeForm';
 import RecipeDetails from './components/RecipeDetails';
 import SearchBar from './components/SearchBar';
+import FavoritesList from './components/FavoritesList';
+import RecommendationsList from './components/RecommendationsList';
 
 function App() {
   const [count, setCount] = useState(0)
@@ -22,10 +24,12 @@ function App() {
           <Route path="/add" element={<AddRecipeForm />} />
           <Route path="/recipe/:id" element={<RecipeDetails />} />
         </Routes>
+	  <FavoritesList />
+        <RecommendationsList />
       </div>
     </Router>
 	  <div>
-      <h1>Recipe Sharing Application</h1>
+      <h1 className="text-blue-500">Recipe Sharing Application</h1>
       <AddRecipeForm />
       <RecipeList />
     </div>
